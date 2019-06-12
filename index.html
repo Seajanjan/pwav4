@@ -1,0 +1,143 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="images/hello-icon-152.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="white"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Hello World">
+  <meta name="msapplication-TileImage" content="images/hello-icon-144.png">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+</head>
+    <style>
+    div {
+        margin-bottom: 15px;
+    }
+</style>
+<body>
+    <h1>
+    Page 1 of 2
+    </h1>
+
+    <table border="1">
+    <tr width="300px" hight="300px">
+        <th>
+            <p >
+            Google
+            </p>
+        </th>
+        <th>
+            <p> 
+            Eine Suchmaschine
+            </p>
+        </th>
+        <th>
+            <a href="https://www.google.de/">
+                <img src="./images/Google.png" width="225" hight="225">
+            </a>
+        </th>
+        
+    </tr>
+    
+    <tr width="300px" hight="300px">
+        <th>
+            <p>
+            aXon Gesellschaft für Informationssysteme mbH
+            </p>
+        </th>
+        <th>
+            <p>
+            Ein Unternehemen
+            </p>
+        </th>
+        <th>
+            <a href="https://www.axongmbh.de/">
+                <img src="https://www.axongmbh.de/SiteAssets/logo.png" width="196" hight="60">
+            </a>
+        </th>    
+    </tr>
+        
+    <tr>
+        <th colspan="3">
+            <p>
+                <font size=6>
+                Mehr Anzeigen?
+                </font>
+           
+            </p>    
+        </th>
+        <th>
+            
+        </th>
+        <th>
+        
+        </th>
+    </tr>
+        
+    <tr>
+        <th bgcolor="blue">
+            <a href="./Seite.html"> 
+                <img src="./images/yes.png">
+             </a>  
+        </th> 
+        <th>
+            
+        </th>
+        <th bgcolor="red">
+            <a href="index.html">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQksavrwF5dhKzxWvjuI82b4qkDiImo3-h1EkcdL-Y0ByNAdSN3jw">
+            </a>
+        </th>
+        
+    </tr>   
+    
+    </table>
+  <script src="js/main.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js">
+    </script>
+     <script>
+        MsgElem = document.getElementById("msg")
+        TokenElem = document.getElementById("token")
+        NotisElem = document.getElementById("notis")
+        ErrElem = document.getElementById("err")
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+        var config = {
+            apiKey: "<AIzaSyDaR6nY9gmEaqUZs2nVmVyBvAJPQ-p4snM>",
+            authDomain: "<pwanotifications-ca2bc>",
+            databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
+            storageBucket: "<BUCKET>.appspot.com",
+            messagingSenderId: "<34555219382>",
+        };
+        firebase.initializeApp(config);
+
+        const messaging = firebase.messaging();
+        messaging
+            .requestPermission()
+            .then(function () {
+                MsgElem.innerHTML = "Notification permission granted." 
+                console.log("Notification permission granted.");
+
+                // get the token in the form of promise
+                return messaging.getToken()
+            })
+            .then(function(token) {
+                TokenElem.innerHTML = "token is : " + token
+            })
+            .catch(function (err) {
+                ErrElem.innerHTML =  ErrElem.innerHTML + "; " + err
+                console.log("Unable to get permission to notify.", err);
+            });
+
+        messaging.onMessage(function(payload) {
+            console.log("Message received. ", payload);
+            NotisElem.innerHTML = NotisElem.innerHTML + JSON.stringify(payload) 
+        });
+    </script>
+</body>
+</html>
